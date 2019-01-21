@@ -515,6 +515,14 @@ in
         '';
       };
 
+      tearFree = mkOption {
+        type = types.bool;
+        default = false;
+        description = ''
+          Set TearFree on for xserver device
+        '';
+      };
+
       enableCtrlAltBackspace = mkOption {
         type = types.bool;
         default = false;
@@ -760,6 +768,7 @@ in
             Identifier "Device-${driver.name}[0]"
             Driver "${driver.driverName or driver.name}"
             ${if cfg.useGlamor then ''Option "AccelMethod" "glamor"'' else ""}
+            ${if cfg.tearFree then ''Option "TearFree" "on"'' else ""}
             ${cfg.deviceSection}
             ${driver.deviceSection or ""}
             ${xrandrDeviceSection}
