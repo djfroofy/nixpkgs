@@ -118,7 +118,7 @@ let
     if hasChecksum value then {
       submodules = value.src.fetchSubmodules or false;
       sha256 = value.src.outputHash;
-      rev = value.src.rev;
+      rev = value.src.rev or "";
     } else null;
   checksums = lib.mapAttrs getChecksum vimPlugins;
 in lib.filterAttrs (n: v: v != null) checksums)"""
@@ -232,7 +232,6 @@ def get_cache_path() -> Optional[Path]:
 class Cache:
     def __init__(self, initial_plugins: List[Plugin]) -> None:
         self.cache_file = get_cache_path()
-
         downloads = {}
         for plugin in initial_plugins:
             downloads[plugin.commit] = plugin
