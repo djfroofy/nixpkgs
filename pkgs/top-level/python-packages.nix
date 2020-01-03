@@ -268,6 +268,8 @@ in {
 
   azure-batch = callPackage ../development/python-modules/azure-batch { };
 
+  azure-core = callPackage ../development/python-modules/azure-core { };
+
   azure-cosmosdb-nspkg = callPackage ../development/python-modules/azure-cosmosdb-nspkg { };
 
   azure-cosmosdb-table = callPackage ../development/python-modules/azure-cosmosdb-table { };
@@ -281,6 +283,10 @@ in {
   azure-graphrbac = callPackage ../development/python-modules/azure-graphrbac { };
 
   azure-keyvault = callPackage ../development/python-modules/azure-keyvault { };
+
+  azure-keyvault-keys = callPackage ../development/python-modules/azure-keyvault-keys { };
+
+  azure-keyvault-secrets = callPackage ../development/python-modules/azure-keyvault-secrets { };
 
   azure-loganalytics = callPackage ../development/python-modules/azure-loganalytics { };
 
@@ -466,6 +472,8 @@ in {
 
   bash_kernel = callPackage ../development/python-modules/bash_kernel { };
 
+  bashlex = callPackage ../development/python-modules/bashlex { };
+
   bayespy = callPackage ../development/python-modules/bayespy { };
 
   beanstalkc = callPackage ../development/python-modules/beanstalkc { };
@@ -531,6 +539,8 @@ in {
   cnvkit = callPackage ../development/python-modules/cnvkit { };
 
   cocotb = callPackage ../development/python-modules/cocotb { };
+
+  compiledb = callPackage ../development/python-modules/compiledb { };
 
   connexion = callPackage ../development/python-modules/connexion { };
 
@@ -756,6 +766,8 @@ in {
   janus = callPackage ../development/python-modules/janus { };
 
   jira = callPackage ../development/python-modules/jira { };
+
+  junitparser = callPackage ../development/python-modules/junitparser { };
 
   jwcrypto = callPackage ../development/python-modules/jwcrypto { };
 
@@ -3723,8 +3735,10 @@ in {
 
   ipyparallel = callPackage ../development/python-modules/ipyparallel { };
 
-  ipython = if pythonOlder "3.5" then
+  ipython = if isPy27 then
       callPackage ../development/python-modules/ipython/5.nix { }
+    else if isPy35 then
+      callPackage ../development/python-modules/ipython/7.9.nix { }
     else
       callPackage ../development/python-modules/ipython { };
 
@@ -4263,7 +4277,9 @@ in {
 
   numba = callPackage ../development/python-modules/numba { };
 
-  numcodecs = callPackage ../development/python-modules/numcodecs { };
+  numcodecs = callPackage ../development/python-modules/numcodecs {
+    inherit (pkgs) gcc8;
+  };
 
   numexpr = callPackage ../development/python-modules/numexpr { };
 
@@ -4346,6 +4362,8 @@ in {
   rfc3986 = callPackage ../development/python-modules/rfc3986 { };
 
   cachetools = callPackage ../development/python-modules/cachetools {};
+
+  cma = callPackage ../development/python-modules/cma { };
 
   cmd2 = callPackage ../development/python-modules/cmd2 {};
 
@@ -4528,6 +4546,12 @@ in {
   }));
 
   precis-i18n = callPackage ../development/python-modules/precis-i18n { };
+
+  prox-tv = callPackage ../development/python-modules/prox-tv {
+    # We need to use blas instead of openblas on darwin,
+    # see https://github.com/NixOS/nixpkgs/pull/45013.
+    useOpenblas = ! stdenv.isDarwin;
+  };
 
   pvlib = callPackage ../development/python-modules/pvlib { };
 
@@ -5202,6 +5226,8 @@ in {
   serverlessrepo = callPackage ../development/python-modules/serverlessrepo { };
 
   shippai = callPackage ../development/python-modules/shippai {};
+
+  shutilwhich = callPackage ../development/python-modules/shutilwhich { };
 
   simanneal = callPackage ../development/python-modules/simanneal { };
 
